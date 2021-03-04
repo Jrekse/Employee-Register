@@ -14,6 +14,3 @@ function generateCard(data){
 }
 
 module.exports = generateCard;
-// function test(){
-//     console.log("i work")
-// }
