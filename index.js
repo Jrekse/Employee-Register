@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const jest = require('jest');
 const path = require('path');
 const fs = require('fs');
-const html = require('./lib/constructs')
+const html = require('./src/pageTemplate')
 
 const promptUser = 
     [
@@ -39,13 +39,11 @@ const promptUser =
             choices: ['Yes', 'No'],
         }
     ];
-function writeToFile(fileName, data){
-    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
-};
+
 
 function init() {
     inquirer.prompt(promptUser).then((...inquirerResponses)=>{
-        writeToFile('index.html', gen({...inquirerResponses}))
+        //send to card
     })
 }
 
