@@ -153,7 +153,7 @@ function takeResponseM(){
             takeResponseM();
         }
         else if (response.again === 'Engineer'){
-            takeResponseM();
+            takeResponseE();
         }
         else if (response.again === 'No, finish.'){
             HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
