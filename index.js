@@ -1,11 +1,12 @@
 const inquirer = require('inquirer');
 const jest = require('jest');
 const fs = require('fs');
-const html = require('./src/pageTemplate')
+const teamArray = [];
 const Manager = require('./lib/constructs')
 const Engineer = require('./lib/constructs')
 const Intern = require('./lib/constructs')
-const teamArray = [];
+
+
 
 function init(){
     //starts code
@@ -98,7 +99,7 @@ function createTeamIntern(){
         },
         {
             type: 'list',
-            name: 'Iagain',
+            name: 'again',
             message: 'Would you like to add another team member?',
             choices: ['Intern', 'Manager', 'Engineer', 'No, finish.'],
         }
@@ -134,7 +135,7 @@ function createTeamEngineer(){
         },
         {
             type: 'list',
-            name: 'Eagain',
+            name: 'again',
             message: 'Would you like to add another team member?',
             choices: ['Intern', 'Manager', 'Engineer', 'No, finish.'],
         }
@@ -155,7 +156,7 @@ function takeResponseM(){
             takeResponseM();
         }
         else if (response.again === 'No, finish.'){
-            
+            endTeamBuild();
         }
     })
 }
@@ -164,17 +165,17 @@ function takeResponseI(){
     createTeamIntern().then(function(response){
         const internInfo = new Intern (response.Iname, response.Iid, response.Iemail, response.Igithub)
         teamArray.push(internInfo);
-        if (response.Iagain === 'Intern'){
+        if (response.again === 'Intern'){
             takeResponseI();
         }
-        else if (response.Iagain === 'Manager'){
+        else if (response.again === 'Manager'){
             takeResponseM();
         }
-        else if (response.Iagain === 'Engineer'){
+        else if (response.again === 'Engineer'){
             takeResponseE();
         }
-        else if (response.Iagain === 'No, finish.'){
-            
+        else if (response.again === 'No, finish.'){
+            endTeamBuild();
         }
     })
 }
@@ -186,18 +187,111 @@ function takeResponseE(){
         if (response.again === 'Intern'){
             takeResponseI();
         }
-        else if (response.Eagain === 'Manager'){
+        else if (response.again === 'Manager'){
             takeResponseM();
         }
-        else if (response.Eagain === 'Engineer'){
+        else if (response.again === 'Engineer'){
             takeResponseE();
         }
-        else if (response.Eagain === 'No, finish.'){
-            
+        else if (response.again === 'No, finish.'){
+            endTeamBuild();
         }
     })
 }
 
+function endTeamBuild(){
+    HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
+}
 
+function Mtemplate(arr){
+    MObj = arr.filter((employee) => (employee.again === 'Manager'))
+    const makeCardStringM = MObj.map(Manager =>
+    `<div class="card" style="width: 18rem;">
+         <div class="card-body">
+             <h5 class="card-title">${Manager.getName()}</h5>
+             <h4 class="card-subtitle mb-2">Manager</h4>
+             <div class="card-body">ID:${Manager.getId()}</div>
+             <div class="card-body">Email:${Manager.getEmail()}</div>
+             <div class="card-body">Github:${Manager.getGithub()}</div>
+             <div class="card-body">Office Number:${Manager.getONumber()}
+         </div>
+     </div>`
+    );
+     return makeCardStringM
+}
+
+function Etemplate(arr){
+    EObj = arr.filter((employee) => (employee.Eagain === 'Engineer'))
+    const makeCardStringE = EObj.map(Engineer =>
+    `<div class="card" style="width: 18rem;">
+         <div class="card-body">
+             <h5 class="card-title">${Engineer.getName()}</h5>
+             <h4 class="card-subtitle mb-2">Engineer</h4>
+             <div class="card-body">ID:${Engineer.getId()}</div>
+             <div class="card-body">Email:${Engineer.getEmail()}</div>
+             <div class="card-body">Github:${Engineer.getEgithub()}</div>
+             <div class="card-body">Alma Mater:${Engineer.getESchool()}
+         </div>
+     </div>`
+    );
+     return makeCardStringE
+}
+
+function Itemplate(arr){
+    IObj = arr.filter((employee) => (employee.again === 'Intern'))
+    const makeCardStringI = IObj.map(Intern =>
+    `<div class="card" style="width: 18rem;">
+         <div class="card-body">
+             <h5 class="card-title">${Intern.getName()}</h5>
+             <h4 class="card-subtitle mb-2">Intern</h4>
+             <div class="card-body">ID:${Intern.getId()}</div>
+             <div class="card-body">Email:${Intern.getEmail()}</div>
+             <div class="card-body">Github:${Intern.getiSchool()}</div>
+         </div>
+     </div>`
+    );
+     return makeCardStringI
+}
+
+function HTMLTemplate(a, b, c){
+    fs.writeFile('index.html',
+    `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="./dist/style.css">
+        <title>Document</title>
+    </head>
+    <body>
+        <div class="navbar-nav" id="title">
+            <h1>My Team</h1>
+        </div>
+        <hr>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-4" id="cardcols">
+                    ${a}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4" id="cardcols">
+                    ${b}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4" id="cardcols">
+                    ${c}
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>`, (err) => err ? console.log(err) : console.log('you son of a bi%$* you did it')
+    )
+}
 
 takeResponseS()
