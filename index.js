@@ -156,7 +156,7 @@ function takeResponseM(){
             takeResponseM();
         }
         else if (response.again === 'No, finish.'){
-            endTeamBuild();
+            HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
         }
     })
 }
@@ -175,7 +175,7 @@ function takeResponseI(){
             takeResponseE();
         }
         else if (response.again === 'No, finish.'){
-            endTeamBuild();
+            HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
         }
     })
 }
@@ -194,14 +194,11 @@ function takeResponseE(){
             takeResponseE();
         }
         else if (response.again === 'No, finish.'){
-            endTeamBuild();
+            HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
         }
     })
 }
 
-function endTeamBuild(){
-    HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
-}
 
 function Mtemplate(arr){
     MObj = arr.filter((employee) => (employee.again === 'Manager'))
@@ -253,7 +250,7 @@ function Itemplate(arr){
      return makeCardStringI
 }
 
-function HTMLTemplate(a, b, c){
+function HTMLTemplate(Man, Eng, Int){
     fs.writeFile('index.html',
     `<!DOCTYPE html>
     <html lang="en">
@@ -275,20 +272,25 @@ function HTMLTemplate(a, b, c){
         <div class="container">
             <div class="row">
                 <div class="col-4" id="cardcols">
-                    ${a}
+                    ${Man}
                 </div>
             </div>
             <div class="row">
                 <div class="col-4" id="cardcols">
-                    ${b}
+                    ${Eng}
                 </div>
             </div>
             <div class="row">
                 <div class="col-4" id="cardcols">
-                    ${c}
+                    ${Int}
                 </div>
             </div>
         </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"
+        ></script>
     </body>
     </html>`, (err) => err ? console.log(err) : console.log('you son of a bi%$* you did it')
     )
