@@ -2,9 +2,9 @@ const inquirer = require('inquirer');
 const jest = require('jest');
 const fs = require('fs');
 const teamArray = [];
-const Manager = require('./lib/constructs')
-const Engineer = require('./lib/constructs')
-const Intern = require('./lib/constructs')
+const Manager = require('./lib/constructM')
+const Engineer = require('./lib/constructE')
+const Intern = require('./lib/constructI')
 
 
 
@@ -175,14 +175,15 @@ function takeResponseI(){
             takeResponseE();
         }
         else if (response.again === 'No, finish.'){
-            HTMLTemplate(Mtemplate(teamArray), Etemplate(teamArray), Itemplate(teamArray))
+            Mtemplate() = Mtemplate(teamArray)
+            HTMLTemplate(Mtemplate(), Etemplate(teamArray), Itemplate(teamArray))
         }
     })
 }
 
 function takeResponseE(){
     createTeamEngineer().then(function(response){
-        const engineerInfo = new Engineer (response.Ename, response.Eid, response.Eemail, response.Egithub)
+        const engineerInfo = new Engineer (response.Ename, response.Eid, response.Eemail, response.Eschool, response.Egithub)
         teamArray.push(engineerInfo);
         if (response.again === 'Intern'){
             takeResponseI();
@@ -209,7 +210,6 @@ function Mtemplate(arr){
              <h4 class="card-subtitle mb-2">Manager</h4>
              <div class="card-body">ID:${Manager.getId()}</div>
              <div class="card-body">Email:${Manager.getEmail()}</div>
-             <div class="card-body">Github:${Manager.getGithub()}</div>
              <div class="card-body">Office Number:${Manager.getONumber()}
          </div>
      </div>`
@@ -218,7 +218,7 @@ function Mtemplate(arr){
 }
 
 function Etemplate(arr){
-    EObj = arr.filter((employee) => (employee.Eagain === 'Engineer'))
+    EObj = arr.filter((employee) => (employee.again === 'Engineer'))
     const makeCardStringE = EObj.map(Engineer =>
     `<div class="card" style="width: 18rem;">
          <div class="card-body">
@@ -226,8 +226,8 @@ function Etemplate(arr){
              <h4 class="card-subtitle mb-2">Engineer</h4>
              <div class="card-body">ID:${Engineer.getId()}</div>
              <div class="card-body">Email:${Engineer.getEmail()}</div>
-             <div class="card-body">Github:${Engineer.getEgithub()}</div>
-             <div class="card-body">Alma Mater:${Engineer.getESchool()}
+             <div class="card-body">Github:${Engineer.getGithub()}</div>
+             <div class="card-body">Alma Mater:${Engineer.getEschool()}
          </div>
      </div>`
     );
@@ -243,7 +243,7 @@ function Itemplate(arr){
              <h4 class="card-subtitle mb-2">Intern</h4>
              <div class="card-body">ID:${Intern.getId()}</div>
              <div class="card-body">Email:${Intern.getEmail()}</div>
-             <div class="card-body">Github:${Intern.getiSchool()}</div>
+             <div class="card-body">Github:${Intern.getSchool()}</div>
          </div>
      </div>`
     );
