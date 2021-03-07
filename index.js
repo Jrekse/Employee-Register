@@ -204,15 +204,15 @@ function takeResponseE(){
 function Mtemplate(arr){
     MObj = arr.filter((employee) => (employee.again === 'Manager'))
     const makeCardStringM = MObj.map(Manager =>
-    `<div class="card" style="width: 18rem;">
+    `<div class="card col-sm" id="cardcols" style="width: 18rem;">
          <div class="card-body">
              <h5 class="card-title">${Manager.getName()}</h5>
              <h4 class="card-subtitle mb-2">Manager</h4>
              <div class="card-body">ID:${Manager.getId()}</div>
              <div class="card-body">Email:${Manager.getEmail()}</div>
-             <div class="card-body">Office Number:${Manager.getONumber()}
+             <div class="card-body">Office Number:${Manager.getONumber()}</div>
          </div>
-     </div>`
+     </div> `
     );
      return makeCardStringM
 }
@@ -220,16 +220,16 @@ function Mtemplate(arr){
 function Etemplate(arr){
     EObj = arr.filter((employee) => (employee.again === 'Engineer'))
     const makeCardStringE = EObj.map(Engineer =>
-    `<div class="card" style="width: 18rem;">
+    `<div class="card col-sm" id="cardcols" style="width: 18rem;">
          <div class="card-body">
              <h5 class="card-title">${Engineer.getName()}</h5>
              <h4 class="card-subtitle mb-2">Engineer</h4>
              <div class="card-body">ID:${Engineer.getId()}</div>
              <div class="card-body">Email:${Engineer.getEmail()}</div>
              <div class="card-body">Github:${Engineer.getGithub()}</div>
-             <div class="card-body">Alma Mater:${Engineer.getEschool()}
+             <div class="card-body">Alma Mater:${Engineer.getEschool()}</div>
          </div>
-     </div>`
+     </div> `
     );
      return makeCardStringE
 }
@@ -237,7 +237,7 @@ function Etemplate(arr){
 function Itemplate(arr){
     IObj = arr.filter((employee) => (employee.again === 'Intern'))
     const makeCardStringI = IObj.map(Intern =>
-    `<div class="card" style="width: 18rem;">
+    `<div class="card col-sm" id="cardcols" style="width: 18rem;">
          <div class="card-body">
              <h5 class="card-title">${Intern.getName()}</h5>
              <h4 class="card-subtitle mb-2">Intern</h4>
@@ -245,7 +245,7 @@ function Itemplate(arr){
              <div class="card-body">Email:${Intern.getEmail()}</div>
              <div class="card-body">Github:${Intern.getSchool()}</div>
          </div>
-     </div>`
+     </div> `
     );
      return makeCardStringI
 }
@@ -271,20 +271,23 @@ function HTMLTemplate(Man, Eng, Int){
         <br>
         <div class="container">
             <div class="row">
-                <div class="col-4" id="cardcols">
+                <div class="container" id="cardrows">
                     ${Man}
                 </div>
             </div>
             <div class="row">
-                <div class="col-4" id="cardcols">
+                <div class="container" id="cardrows">
                     ${Eng}
                 </div>
             </div>
             <div class="row">
-                <div class="col-4" id="cardcols">
+                <div class="container" id="cardrows">
                     ${Int}
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
         </div>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
