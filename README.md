@@ -11,5 +11,9 @@ Test functions
 # Process
 I had to build the app before the tests because i am still not comfortable using them however they were used to test before submission
 
+to install dependencies type "npm install"
+to test type "npm test"
+to run type "node index.js"
+
 # github repo
 https://github.com/Jrekse/Employee-Register
